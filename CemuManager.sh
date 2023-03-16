@@ -1,18 +1,53 @@
 #!/bin/sh
+#will check for mlc path and ask the user for location if it doesnt exist
+echo "Checking for requierd files"
+if [[ ! -d ~/.config/CemuStarter ]]
+then
+    mkdir ~/.config/CemuStarter
+    mv PathSet.sh ~/.config/CemuStarter
+fi
+
+if [[ -d ~/.config/CemuStarter ]]
+then
+    if [[ -f PathSet.sh ]]
+    then
+        mv PathSet.sh ~/.config/CemuStarter
+    fi
+fi
+
+cd ~/.config/CemuStarter
+
+if [[ ! -f cemu ]] && [[ ! -f mlc ]]
+then
+    ./PathSet.sh
+fi
+
+if [[ -f cemu ]] && [[  -f mlc ]]
+then
+    echo "requiered files located"
+fi
+
+if [[ ! -f cemu ]] && [[ ! -f mlc ]]
+then
+    echo "Please make sure to have PathSet.sh in the same location as this script"
+    echo "Fatel error"
+    echo "Exiting..."
+    exit
+fi
+
 clear
 echo "-----Please chose an option-----"
 PS3='------->'
-options=("Start" "Update" "Manage mlc01 !!NOT AVALIBLE!!" "Exit")
+options=("Start" "Update" "Install Dependincies" "Manage mlc01" "Exit")
 select menu in "${options[@]}"; do
     case $menu in
     #Used for launching Cemu
 
         "Start")
             echo "Starting Cemu..."
-            echo "Finished!!"
-            echo "Following warnings are from Cemu, not this script"
     #Change this if youre cemu folder is not on home
 	    cd ~/Cemu/bin
+            echo "Following warnings are from Cemu, not this script"
 	    ./Cemu_release
             echo "----------Cemu closed----------"
 	    exit
@@ -29,65 +64,100 @@ select menu in "${options[@]}"; do
 	    cmake -S . -B build -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -G Ninja
 	    cmake --build build
             echo "Finished!!"
-        exit
+            echo "Please restart CemuManager"
+            exit
             ;;
 
+        "Install Dependincies")
+            clear
+            echo "Choose distro base *ONLY ARCH IS SUPPOTRED CURRENTLY"
+            echo "password will be requierd"
+            echo "-----Please chose an option-----"
+        PS3='------->'
+        mlc01=("continue" "exit")
+        select menu2 in "${mlc01[@]}"; do
+            case $menu2 in
+
+            "continue")
+            sudo pacman -S --needed base-devel clang cmake freeglut git gtk3 libgcrypt libpulse libsecret linux-headers llvm nasm ninja systemd unzip zip
+
+            echo "Please restart cemu manager"
+
+        ;;
+
+             "exit")
+             exit
+        ;;
+        esac
+        done
+        ;;
+
     #Used for managing the mlc01 folder
-        "Manage mlc01 !!NOT AVALIBLE!!")
+        "Manage mlc01")
         clear
-        echo "Wip"
-        echo "Exiting..."
-        exit
-#        echo "-----Please chose an option-----"
-#        PS3='------->'
-#        mlc01=("Move" "Delete" "change" "exit")
-#        select menu2 in "${mlc01[@]}"; do
-#            case $menu2 in
-#
-#    #for moving the mlc01 folder
-#            Move)
-#                    echo "Please chose a location"
-#
-#
-#
-#                    echo "---end test---"
-#                exit
-#            ;;
-#
-#    #for Deleting the mlc01 folder
-#            Delete)
-#                clear
-#                    echo "Are you sure you want to delet mlc01?"
-#                        PS3='------->'
-#                        delet=("Yes" "No")
-#                        select menu3 in "${delet[@]}"; do
-#                            case $menu3 in
-#
-#                            Yes)
-#                                echo "Not implimented"
-#                                echo "Exiting"
-#                            exit
-#                            ;;
-#
-#                            No)
-#                                echo "Canceling..."
-#                                echo "exiting..."
-#                            exit
-#                            ;;
-#                        *) echo "invalid option $REPLY";;
-#                        esac
-#                    done
-#            ;;
-#
-#    #for exiting the script
-#
-#            exit)
-#                    echo "Exiting..."
-#                exit
-#            ;;
-#            *) echo "invalid option $REPLY";;
-#            esac
-#        done
+        echo "-----Please chose an option-----"
+        PS3='------->'
+        mlc01=("Move" "Delete" "change" "exit")
+        select menu2 in "${mlc01[@]}"; do
+            case $menu2 in
+
+    #for moving the mlc01 folder
+            Move)
+                    echo "Please chose a location"
+
+
+
+                    echo "---end test---"
+                exit
+            ;;
+
+    #for Deleting the mlc01 folder
+            Delete)
+                clear
+                    echo "Are you sure you want to delet mlc01?"
+                        PS3='------->'
+                        delet=("Yes" "No")
+                        select menu3 in "${delet[@]}"; do
+                            case $menu3 in
+
+                            Yes)
+                                echo "error"
+                                echo "Not implimented"
+                                echo "Exiting"
+                            exit
+                            ;;
+
+                            No)
+                                echo "Canceling..."
+                                echo "exiting..."
+                            exit
+                            ;;
+                        *) echo "invalid option $REPLY";;
+                        esac
+                    done
+            ;;
+
+    #for changing mlc01 location
+            change)
+            clear
+                echo "-----Please enter a location-----"
+                cat ~/.config/CemuStarter/mlc
+                echo "^current location"
+
+                echo "------->"
+                echo "fatel error"
+                echo "exiting"
+                exit
+            ;;
+    #for exiting the script
+
+            exit)
+                    echo "Exiting..."
+                exit
+            ;;
+            *) echo "invalid option $REPLY";;
+            esac
+        done
 
         ;;
 
