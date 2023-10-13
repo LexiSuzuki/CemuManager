@@ -1,8 +1,9 @@
 #!/bin/sh
+#Last updated 10/13/2023
 clear
 echo "-----Please chose an option-----"
 PS3='------->'
-options=("Start" "Update" "Install Dependincies" "Manage mlc01" "Exit")
+options=("Start" "Update Linux" "Update MacOS" "Install Dependincies" "Manage mlc01" "Exit")
 select menu in "${options[@]}"; do
     case $menu in
     #Used for launching Cemu
@@ -17,9 +18,9 @@ select menu in "${options[@]}"; do
 	    exit
             ;;
 
-    #Used for Updating Cemu
+    #Used for Updating Cemu on Linux
 
-        "Update")
+        "Update Linux")
             echo "Updating..."
     #please change these paths according to where you store Cemu
 	    cd ~/
@@ -31,24 +32,48 @@ select menu in "${options[@]}"; do
             echo "Please restart CemuManager"
             exit
             ;;
+            
+    #Used for Updating Cemu on MacOS
 
+        "Update MacOS")
+            echo "Updating..."
+    #please change these paths according to where you store Cemu
+        eval "$(/usr/local/Homebrew/bin/brew shellenv)"
+        cd ~/
+        git clone --recursive https://github.com/cemu-project/Cemu
+        cd Cemu
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DCMAKE_MAKE_PROGRAM=/usr/local/bin/ninja -G Ninja
+        cmake --build build
+            echo "Finished!!"
+            echo "Please restart CemuManager"
+            exit
+            ;;
+
+    #Installing the dependincies
         "Install Dependincies")
             clear
-            echo "Choose distro base *ONLY ARCH IS SUPPOTRED CURRENTLY"
-            echo "password will be requierd"
+            echo "Choose OS type"
+            echo "password will be requierd for Linux based systems"
             echo "-----Please chose an option-----"
         PS3='------->'
-        mlc01=("continue" "exit")
+        mlc01=("Arch Based" "MacOS" "exit")
         select menu2 in "${mlc01[@]}"; do
             case $menu2 in
 
-            "continue")
+            "Arch Based")
             sudo pacman -S --needed base-devel clang cmake freeglut git gtk3 libgcrypt libpulse libsecret linux-headers llvm nasm ninja systemd unzip zip
 
             echo "Please restart cemu manager"
 
         ;;
-
+        
+            "MacOS")
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            eval "$(/usr/local/Homebrew/bin/brew shellenv)"
+            brew install boost git cmake llvm ninja nasm molten-vk automake libtool pkg-config
+            
+            
+        ;;
              "exit")
              exit
         ;;

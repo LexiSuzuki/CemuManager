@@ -1,9 +1,10 @@
 #!/bin/sh
+#updated 10/13/23
 #This will first check for any updates and then apply them if needed
 echo "Checkign for updates"
-
-#todo / add updater
-
+cd ..
+git clone --recursive https://github.com/LexiSuzuki/CemuManager.git
+cd CemuManager
 #This will bring up a prompt to choose between MacOS and Linux
 echo "------Please choose and OS------"
 PS3='------->'
@@ -13,7 +14,8 @@ select menu in "${options[@]}"; do
     
     #for choosing MacOS
         "MacOS")
-            sh ./MacOS-Start.sh
+            softwareupdate --install-rosetta
+            arch -x86_64 zsh ./MacOS-Start.sh
     ;;
     
     #for choosing Linux Based
