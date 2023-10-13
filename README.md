@@ -1,3 +1,7 @@
 # CemuManager
-This is a simple script I made for managing Cemu on Linux. Currently this script only allows opening and updating Cemu *For the compiling method, will not work on pre compiled veriants* but future options will be coming soon including mlc01 management. This script was tested on Manjaro but should work on any distro.
-This script also relys on the fact of you stored Cemu in the Home directory. If you do not have it there you will need to change the paths inside the script untill I have a way to allow the user to set paths within the script
+This is a basic script I made to help you build and use Cemu on Linux based distros and MacOS.
+To use simply launch OS-Type in your terminal of choice and follow the on screen options to guide you along the script.
+It's important to run the dependency setup as this is important to build Cemu as well as set up the build eniorment on MacOS.
+MacOS support is still early and this script is desighned with ARM based macs in mind *as I only own an M2 mac so yeah*
+And Linux support is limited to Arch based distros for dependency setup, tho if you have them the build should work on any distro
+For info on Cemu please visit there official Github on https://github.com/cemu-project/Cemu
