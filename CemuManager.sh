@@ -1,40 +1,4 @@
 #!/bin/sh
-#will check for mlc path and ask the user for location if it doesnt exist
-echo "Checking for requierd files"
-if [[ ! -d ~/.config/CemuStarter ]]
-then
-    mkdir ~/.config/CemuStarter
-    mv PathSet.sh ~/.config/CemuStarter
-fi
-
-if [[ -d ~/.config/CemuStarter ]]
-then
-    if [[ -f PathSet.sh ]]
-    then
-        mv PathSet.sh ~/.config/CemuStarter
-    fi
-fi
-
-cd ~/.config/CemuStarter
-
-if [[ ! -f cemu ]] && [[ ! -f mlc ]]
-then
-    ./PathSet.sh
-fi
-
-if [[ -f cemu ]] && [[  -f mlc ]]
-then
-    echo "requiered files located"
-fi
-
-if [[ ! -f cemu ]] && [[ ! -f mlc ]]
-then
-    echo "Please make sure to have PathSet.sh in the same location as this script"
-    echo "Fatel error"
-    echo "Exiting..."
-    exit
-fi
-
 clear
 echo "-----Please chose an option-----"
 PS3='------->'
