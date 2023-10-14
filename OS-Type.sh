@@ -7,7 +7,7 @@ git clone --recursive https://github.com/LexiSuzuki/CemuManager.git
 echo Update complete
 cd CemuManager
 clear
-sh ./OS-Type.sh
+echo "it is recromended to rerun the script to ensure your on the latest version"
 #This will bring up a prompt to choose between MacOS and Linux
 echo "------Please choose and OS------"
 PS3='------->'
