@@ -22,7 +22,7 @@ select menu in "${options[@]}"; do
         "MacOS")
             cd CemuManager-Data
             softwareupdate --install-rosetta
-            arch -x86_64 zsh ./CemuManager.sh
+            arch -x86_64 zsh ./MacOS-Start.sh
         clear
     exit
     ;;
