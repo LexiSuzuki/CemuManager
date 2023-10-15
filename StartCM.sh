@@ -12,7 +12,7 @@ cd CemuManager
 clear
 #echo "it is recromended to rerun the script to ensure your on the latest version"
 #This will bring up a prompt to choose between MacOS and Linux
-echo "------Please choose and OS------"
+echo "------ Please choose and OS -- V1.4 ------"
 PS3='------->'
 options=("MacOS" "Linux Based")
 select menu in "${options[@]}"; do
