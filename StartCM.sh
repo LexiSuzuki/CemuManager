@@ -1,8 +1,11 @@
 #!/bin/sh
 #updated 10/13/23
 #This will first check for any updates and then apply them if needed
+clear
 echo "Checkign for updates"
 cd ..
+echo "On MacOS just type y 3 times if you get any popups in the ternimal"
+rm -R CemuManager
 git clone --recursive https://github.com/LexiSuzuki/CemuManager.git
 echo Update complete
 cd CemuManager
@@ -19,7 +22,7 @@ select menu in "${options[@]}"; do
         "MacOS")
             cd CemuManager-Data
             softwareupdate --install-rosetta
-            arch -x86_64 zsh ./MacOS-Start.sh
+            arch -x86_64 zsh ./CemuManager.sh
         clear
     exit
     ;;
