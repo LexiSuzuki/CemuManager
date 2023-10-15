@@ -53,7 +53,7 @@ select menu in "${options[@]}"; do
         "Install Dependincies")
             clear
             echo "Choose OS type"
-            echo "password will be requierd for Linux based systems"
+            echo "password will be requierd"
             echo "-----Please chose an option-----"
         PS3='------->'
         mlc01=("Arch Based" "MacOS" "exit")
