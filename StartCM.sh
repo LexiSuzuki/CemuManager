@@ -14,7 +14,7 @@ clear
 #This will bring up a prompt to choose between MacOS and Linux
 echo "------ Please choose and OS -- V1.4 ------"
 PS3='------->'
-options=("MacOS" "Linux Based")
+options=("MacOS" "Linux Based" "Quite")
 select menu in "${options[@]}"; do
     case $menu in
     
@@ -30,6 +30,10 @@ select menu in "${options[@]}"; do
     #for choosing Linux Based
         "Linux Based")
             ./Linux-Start.sh
+    ;;
+
+        "Quite")
+            exit
     ;;
     
 esac
